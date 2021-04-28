@@ -87,4 +87,14 @@ This is my experiments/annotations/effort to control some onvif PTZ IP camera do
   * There is no way to prevent someone from streaming a video from this camera if they collect your wifi credentials.
 
 
+## Sources
 
+  *  ONVI-PVR
+     
+     https://github.com/derzu/ONVIF-PVR
+  
+  
+  * onvif-client
+
+    https://github.com/mberest/onvif-client
+    
