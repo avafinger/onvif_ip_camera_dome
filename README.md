@@ -57,11 +57,11 @@ This is my experiments/annotations/effort to control some onvif PTZ IP camera do
   
   * VLC (video + audio)
   
-    Streaming with UDP with Wifi did not have good results, link is stable but camera is 20 meters away and there is some concrete walls.
+    Streaming with UDP (Wifi link) did not have good results, link is stable but camera is 20 meters away and there are some concrete walls.
   
         vlc rtsp://192.168.***.**:554/0/av0
     
-    For a stable connections use RTP-TCP:
+    For a stable connection use RTP-TCP:
   
         vlc --rtsp-tcp rtsp://192.168.***.**:554/0/av0
 
