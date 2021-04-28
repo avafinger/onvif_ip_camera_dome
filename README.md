@@ -19,10 +19,15 @@ This is my experiments/annotations/effort to control some onvif PTZ IP camera do
 **Camera technical info**
 
   Camera Model: Unknown
+  
   Video Codec: MPEG-H Part2/HEVC (H.265) (hevc)
+  
   Audio Codec: PCM ALAW (alaw)
+  
   Video resolution: 640x352 (preview)
+  
   Video resolution: 1920x1080 (main)
+  
 
 **Finding Camera Services and URI**
 
@@ -46,7 +51,9 @@ This is my experiments/annotations/effort to control some onvif PTZ IP camera do
 
 
   Preview URI: rtsp://192.168.***.**:554/0/av1
+  
   Main URI: rtsp://192.168.***.**:554/0/av0
+  
 
 **Streaming video (alternatives)**
 
