@@ -18,7 +18,8 @@ This is my experiments/annotations/effort to control some onvif PTZ IP camera do
 
 **Camera technical info**
 
-    Camera Model: Unknown
+    Camera Model (onvif): EYEPLUS_DEV
+    FirmwareVersion: 7.3.1.0114
     Video Codec: MPEG-H Part2/HEVC (H.265) (hevc)
     Audio Codec: PCM ALAW (alaw)
     Video resolution: 640x352 (preview)
