@@ -86,11 +86,12 @@ This is my experiments/annotations/effort to control some onvif PTZ IP camera do
 
   * Option to record in H265
   * Strong wifi signal
+  * Manage the camera with ONVIF Device Manager
   
 **Cons**
 
   * RTSP with H264 + sound
-  * There is no way to prevent someone from streaming a video from this camera if they collect your wifi credentials.
+  * Stream with ONVIF Device Manager but fails to keep a stream connection, maybe it is using UDP
 
 **Camera info**
 
