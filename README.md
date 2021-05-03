@@ -11,12 +11,13 @@ This is my experiments/annotations/effort to control some onvif PTZ IP camera do
 
   * RTSP with H265 + sound
   * Dual lens (4x)
+  * Pre-set PTZ
 
 **Cons**
 
   * There is no way to prevent someone from streaming a video from this camera if they collect your wifi credentials
 
-**Camera technical info**
+**Camera info**
 
     Camera Model (onvif): EYEPLUS_DEV
     FirmwareVersion: 7.3.1.0114
@@ -72,6 +73,10 @@ This is my experiments/annotations/effort to control some onvif PTZ IP camera do
     
         ./OnvifPVR  rtsp://192.168.***.**:554/0/av0
     
+  * ONVIF Device Manager (Windows)
+
+    **Does not work with this camera**
+    
     
 ## Single Len - 1080P - H264
 
@@ -80,14 +85,47 @@ This is my experiments/annotations/effort to control some onvif PTZ IP camera do
 **Pros**
 
   * Option to record in H265
-  * Dual lens (4x)
-
+  * Strong wifi signal
+  
 **Cons**
 
   * RTSP with H264 + sound
   * There is no way to prevent someone from streaming a video from this camera if they collect your wifi credentials.
 
+**Camera info**
 
+    Camera Model (onvif): NVT IPC-model
+    Firmware: V5.00.R02.0030695.10010.34
+    Preview: 640x360
+    Main: 1920x1080
+    Video Codec: H264 - MPEG-4 AVC (part 10) (h264)
+    Audio Codec: PCM ALAW (alaw)
+
+**Streaming video (alternatives)**
+
+  VLC, FFMPEG and ONVI-PVR (libva + opencv2) are good alternatives to stream video.
+  
+  * VLC (video + audio)
+  
+    Streaming with UDP (Wifi link) did not have good results, link is stable but camera is 20 meters away and there are some concrete walls.
+  
+        vlc rtsp://lateral:lateral@192.168.***.****:554/user=admin_password=52F8MCmn_channel=1_stream=1.sdp?real_stream
+    
+    For a stable connection use RTP-TCP:
+  
+        vlc --rtsp-tcp rtsp://user:password@192.168.***.***:554/user=admin_password=52F8MCmn_channel=1_stream=0.sdp?real_stream
+
+  * ONVI-PVR (video)
+
+    Streaming rtsp with tcp:
+    
+        ./OnvifPVR  rtsp://user:password@192.168.***.***:554/user=admin_password=52F8MCmn_channel=1_stream=1.sdp?real_stream
+
+
+  * ONVIF Device manager 2.2.250
+
+    Manage and configure the camera on Windows (C#)
+   
 ## Sources
 
   *  ONVI-PVR
@@ -98,4 +136,9 @@ This is my experiments/annotations/effort to control some onvif PTZ IP camera do
   * onvif-client
 
     https://github.com/mberest/onvif-client
+    
+
+  * ONVIF Device Manager (Windows)
+
+    https://sourceforge.net/projects/onvifdm/
     
