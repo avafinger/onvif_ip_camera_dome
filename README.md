@@ -138,8 +138,10 @@ This is my experiments/annotations/effort to control some onvif PTZ IP camera do
 
 Legend:
 
-  C: Client (vlc or ffplay)
-  S: Server (camera dual lens)
+  **C**: Client (vlc or ffplay)
+  
+  **S**: Server (camera dual lens)
+  
 
   **VLC**
   
@@ -336,7 +338,7 @@ Legend:
     C->S: RTSP/1.0 501 Not Implemented
   
 
-We can see that **VLC** has a better implementation of the **rtsp** protocol, but for some reason it is not stable ass **ffmpeg libs (libav)**.
+We can see that **VLC** has a better implementation of the **rtsp** protocol, but for some reason it is not stable as **ffmpeg libs (libav)**.
 
 ## Sources
 
