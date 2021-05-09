@@ -77,7 +77,743 @@ This is my experiments/annotations/effort to control some onvif PTZ IP camera do
 
     **Does not work with this camera**
     
-    
+
+  **PTZ Control**
+  
+  This is the 4 axis movment, camera respond on Port 80 with soap+xml.
+  
+  Grab Movment info:
+  
+  *C->S*
+
+    <s:Envelope
+     xmlns:s="http://www.w3.org/2003/05/soap-envelope">
+     <s:Body
+      xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:xsd = "http://www.w3.org/2001/XMLSchema">
+      <GetMoveOptions xmlns = "http://www.onvif.org/ver20/imaging/wsdl">
+       <VideoSourceToken>VideoSource_1</VideoSourceToken>
+      </GetMoveOptions>
+     </s:Body>
+    </s:Envelope>
+
+  *S->C*
+  
+    <?xml version="1.0" encoding="UTF-8"?>
+    <env:Envelope
+     xmlns:env="http://www.w3.org/2003/05/soap-envelope"
+     xmlns:soapenc="http://www.w3.org/2003/05/soap-encoding"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:xs="http://www.w3.org/2001/XMLSchema"
+     xmlns:tt="http://www.onvif.org/ver10/schema"
+     xmlns:tds="http://www.onvif.org/ver10/device/wsdl"
+     xmlns:trt="http://www.onvif.org/ver10/media/wsdl"
+     xmlns:timg="http://www.onvif.org/ver20/imaging/wsdl"
+     xmlns:tev="http://www.onvif.org/ver10/events/wsdl"
+     xmlns:tptz="http://www.onvif.org/ver20/ptz/wsdl"
+     xmlns:tan="http://www.onvif.org/ver20/analytics/wsdl"
+     xmlns:tst="http://www.onvif.org/ver10/storage/wsdl"
+     xmlns:ter="http://www.onvif.org/ver10/error"
+     xmlns:dn="http://www.onvif.org/ver10/network/wsdl"
+     xmlns:tns1="http://www.onvif.org/ver10/topics"
+     xmlns:tmd="http://www.onvif.org/ver10/deviceIO/wsdl"
+     xmlns:gte="http://www.onvif.org/ver10/gtextension/wsdl"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl"
+     xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12"
+     xmlns:http="http://schemas.xmlsoap.org/wsdl/http"
+     xmlns:d="http://schemas.xmlsoap.org/ws/2005/04/discovery"
+     xmlns:wsadis="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+     xmlns:xop="http://www.w3.org/2004/08/xop/include"
+     xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2"
+     xmlns:wsa="http://www.w3.org/2005/08/addressing"
+     xmlns:wstop="http://docs.oasis-open.org/wsn/t-1"
+     xmlns:wsrf-bf="http://docs.oasis-open.org/wsrf/bf-2"
+     xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2"
+     xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2"
+     xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+     xmlns:wsrf-r="http://docs.oasis-open.org/wsrf/r-2"
+     xmlns:tnsn="http://www.eventextension.com/2011/event/topics">
+     <env:Body>
+      <trt:GetProfilesResponse>
+       <trt:Profiles token="Profile_1" fixed="true">
+        <tt:Name>mainStream</tt:Name>
+        <tt:VideoSourceConfiguration token="VideoSourceToken">
+         <tt:Name>VideoSourceConfig</tt:Name>
+         <tt:UseCount>2</tt:UseCount>
+         <tt:SourceToken>VideoSource_1</tt:SourceToken>
+         <tt:Bounds x="0" y="0" width="1920" height="1080"></tt:Bounds>
+        </tt:VideoSourceConfiguration>
+        <tt:AudioSourceConfiguration token="AudioSourceConfigToken">
+         <tt:Name>AudioSourceConfig</tt:Name>
+         <tt:UseCount>2</tt:UseCount>
+         <tt:SourceToken>AudioSourceChannel1</tt:SourceToken>
+        </tt:AudioSourceConfiguration>
+        <tt:VideoEncoderConfiguration token="VideoEncoderToken_1">
+         <tt:Name>VideoEncoder_1</tt:Name>
+         <tt:UseCount>1</tt:UseCount>
+         <tt:Encoding>H264</tt:Encoding>
+         <tt:Resolution>
+          <tt:Width>1920</tt:Width>
+          <tt:Height>1080</tt:Height>
+         </tt:Resolution>
+         <tt:Quality>10.000000</tt:Quality>
+         <tt:RateControl>
+          <tt:FrameRateLimit>0</tt:FrameRateLimit>
+          <tt:EncodingInterval>1</tt:EncodingInterval>
+          <tt:BitrateLimit>0</tt:BitrateLimit>
+         </tt:RateControl>
+         <tt:H264>
+          <tt:GovLength>100</tt:GovLength>
+          <tt:H264Profile>Baseline</tt:H264Profile>
+         </tt:H264>
+         <tt:Multicast>
+          <tt:Address>
+           <tt:Type>IPv4</tt:Type>
+           <tt:IPv4Address >224.1.2.3</tt:IPv4Address >
+          </tt:Address>
+          <tt:Port>10000</tt:Port>
+          <tt:TTL>1</tt:TTL>
+          <tt:AutoStart>false</tt:AutoStart>
+         </tt:Multicast>
+         <tt:SessionTimeout>PT5S</tt:SessionTimeout>
+        </tt:VideoEncoderConfiguration>
+        <tt:PTZConfiguration token="PTZToken">
+         <tt:Name>PTZ</tt:Name>
+         <tt:UseCount>2</tt:UseCount>
+         <tt:NodeToken>PTZNODETOKEN</tt:NodeToken>
+         <tt:DefaultAbsolutePantTiltPositionSpace>http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace</tt:DefaultAbsolutePantTiltPositionSpace>
+         <tt:DefaultAbsoluteZoomPositionSpace>http://www.onvif.org/ver10/tptz/ZoomSpaces/PositionGenericSpace</tt:DefaultAbsoluteZoomPositionSpace>
+         <tt:DefaultRelativePanTiltTranslationSpace>http://www.onvif.org/ver10/tptz/PanTiltSpaces/TranslationGenericSpace</tt:DefaultRelativePanTiltTranslationSpace>
+         <tt:DefaultRelativeZoomTranslationSpace>http://www.onvif.org/ver10/tptz/ZoomSpaces/TranslationGenericSpace</tt:DefaultRelativeZoomTranslationSpace>
+         <tt:DefaultContinuousPanTiltVelocitySpace>http://www.onvif.org/ver10/tptz/PanTiltSpaces/VelocityGenericSpace</tt:DefaultContinuousPanTiltVelocitySpace>
+         <tt:DefaultContinuousZoomVelocitySpace>http://www.onvif.org/ver10/tptz/ZoomSpaces/VelocityGenericSpace</tt:DefaultContinuousZoomVelocitySpace>
+         <tt:DefaultPTZSpeed>
+          <tt:PanTilt x="0.100000" y="0.100000" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/GenericSpeedSpace"/>
+          <tt:Zoom x="1.000000" space="http://www.onvif.org/ver10/tptz/ZoomSpaces/ZoomGenericSpeedSpace"/>
+         </tt:DefaultPTZSpeed>
+         <tt:DefaultPTZTimeout>PT1S</tt:DefaultPTZTimeout>
+         <tt:PanTiltLimits>
+          <tt:Range>
+           <tt:URI>http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace</tt:URI>
+           <tt:XRange>
+            <tt:Min>-INF</tt:Min>
+            <tt:Max>INF</tt:Max>
+           </tt:XRange>
+           <tt:YRange>
+            <tt:Min>-INF</tt:Min>
+            <tt:Max>INF</tt:Max>
+           </tt:YRange>
+          </tt:Range>
+         </tt:PanTiltLimits>
+         <tt:ZoomLimits>
+          <tt:Range>
+           <tt:URI>http://www.onvif.org/ver10/tptz/ZoomSpaces/PositionGenericSpace</tt:URI>
+           <tt:XRange>
+            <tt:Min>-INF</tt:Min>
+            <tt:Max>INF</tt:Max>
+           </tt:XRange>
+          </tt:Range>
+         </tt:ZoomLimits>
+        </tt:PTZConfiguration>
+        <tt:MetadataConfiguration token="MetaDataToken">
+         <tt:Name>metaData</tt:Name>
+         <tt:UseCount>2</tt:UseCount>
+         <tt:PTZStatus>
+          <tt:Status>true</tt:Status>
+          <tt:Position>true</tt:Position>
+         </tt:PTZStatus>
+         <tt:Analytics>false</tt:Analytics>
+         <tt:Multicast>
+          <tt:Address>
+           <tt:Type>IPv4</tt:Type>
+           <tt:IPv4Address>224.1.2.3</tt:IPv4Address>
+          </tt:Address>
+          <tt:Port>10000</tt:Port>
+          <tt:TTL>1</tt:TTL>
+          <tt:AutoStart>false</tt:AutoStart>
+         </tt:Multicast>
+         <tt:SessionTimeout>PT0S</tt:SessionTimeout>
+        </tt:MetadataConfiguration>
+       </trt:Profiles>
+       <trt:Profiles token="Profile_2" fixed="true">
+        <tt:Name>subStream</tt:Name>
+        <tt:VideoSourceConfiguration token="VideoSourceToken">
+         <tt:Name>VideoSourceConfig</tt:Name>
+         <tt:UseCount>2</tt:UseCount>
+         <tt:SourceToken>VideoSource_1</tt:SourceToken>
+         <tt:Bounds x="0" y="0" width="1920" height="1080"></tt:Bounds>
+        </tt:VideoSourceConfiguration>
+        <tt:AudioSourceConfiguration token="AudioSourceConfigToken">
+         <tt:Name>AudioSourceConfig</tt:Name>
+         <tt:UseCount>2</tt:UseCount>
+         <tt:SourceToken>AudioSourceChannel1</tt:SourceToken>
+        </tt:AudioSourceConfiguration>
+        <tt:VideoEncoderConfiguration token="VideoEncoderToken_2">
+         <tt:Name>VideoEncoder_2</tt:Name>
+         <tt:UseCount>1</tt:UseCount>
+         <tt:Encoding>H264</tt:Encoding>
+         <tt:Resolution>
+          <tt:Width>640</tt:Width>
+          <tt:Height>352</tt:Height>
+         </tt:Resolution>
+         <tt:Quality>10.000000</tt:Quality>
+         <tt:RateControl>
+          <tt:FrameRateLimit>0</tt:FrameRateLimit>
+          <tt:EncodingInterval>1</tt:EncodingInterval>
+          <tt:BitrateLimit>0</tt:BitrateLimit>
+         </tt:RateControl>
+         <tt:H264>
+          <tt:GovLength>100</tt:GovLength>
+          <tt:H264Profile>Baseline</tt:H264Profile>
+         </tt:H264>
+         <tt:Multicast>
+          <tt:Address>
+           <tt:Type>IPv4</tt:Type>
+           <tt:IPv4Address >224.1.2.3</tt:IPv4Address >
+          </tt:Address>
+          <tt:Port>10000</tt:Port>
+          <tt:TTL>1</tt:TTL>
+          <tt:AutoStart>false</tt:AutoStart>
+         </tt:Multicast>
+         <tt:SessionTimeout>PT5S</tt:SessionTimeout>
+        </tt:VideoEncoderConfiguration>
+        <tt:PTZConfiguration token="PTZToken">
+         <tt:Name>PTZ</tt:Name>
+         <tt:UseCount>2</tt:UseCount>
+         <tt:NodeToken>PTZNODETOKEN</tt:NodeToken>
+         <tt:DefaultAbsolutePantTiltPositionSpace>http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace</tt:DefaultAbsolutePantTiltPositionSpace>
+         <tt:DefaultAbsoluteZoomPositionSpace>http://www.onvif.org/ver10/tptz/ZoomSpaces/PositionGenericSpace</tt:DefaultAbsoluteZoomPositionSpace>
+         <tt:DefaultRelativePanTiltTranslationSpace>http://www.onvif.org/ver10/tptz/PanTiltSpaces/TranslationGenericSpace</tt:DefaultRelativePanTiltTranslationSpace>
+         <tt:DefaultRelativeZoomTranslationSpace>http://www.onvif.org/ver10/tptz/ZoomSpaces/TranslationGenericSpace</tt:DefaultRelativeZoomTranslationSpace>
+         <tt:DefaultContinuousPanTiltVelocitySpace>http://www.onvif.org/ver10/tptz/PanTiltSpaces/VelocityGenericSpace</tt:DefaultContinuousPanTiltVelocitySpace>
+         <tt:DefaultContinuousZoomVelocitySpace>http://www.onvif.org/ver10/tptz/ZoomSpaces/VelocityGenericSpace</tt:DefaultContinuousZoomVelocitySpace>
+         <tt:DefaultPTZSpeed>
+          <tt:PanTilt x="0.100000" y="0.100000" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/GenericSpeedSpace"/>
+          <tt:Zoom x="1.000000" space="http://www.onvif.org/ver10/tptz/ZoomSpaces/ZoomGenericSpeedSpace"/>
+         </tt:DefaultPTZSpeed>
+         <tt:DefaultPTZTimeout>PT1S</tt:DefaultPTZTimeout>
+         <tt:PanTiltLimits>
+          <tt:Range>
+           <tt:URI>http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace</tt:URI>
+           <tt:XRange>
+            <tt:Min>-INF</tt:Min>
+            <tt:Max>INF</tt:Max>
+           </tt:XRange>
+           <tt:YRange>
+            <tt:Min>-INF</tt:Min>
+            <tt:Max>INF</tt:Max>
+           </tt:YRange>
+          </tt:Range>
+         </tt:PanTiltLimits>
+         <tt:ZoomLimits>
+          <tt:Range>
+           <tt:URI>http://www.onvif.org/ver10/tptz/ZoomSpaces/PositionGenericSpace</tt:URI>
+           <tt:XRange>
+            <tt:Min>-INF</tt:Min>
+            <tt:Max>INF</tt:Max>
+           </tt:XRange>
+          </tt:Range>
+         </tt:ZoomLimits>
+        </tt:PTZConfiguration>
+        <tt:MetadataConfiguration token="MetaDataToken">
+         <tt:Name>metaData</tt:Name>
+         <tt:UseCount>2</tt:UseCount>
+         <tt:PTZStatus>
+          <tt:Status>true</tt:Status>
+          <tt:Position>true</tt:Position>
+         </tt:PTZStatus>
+         <tt:Analytics>false</tt:Analytics>
+         <tt:Multicast>
+          <tt:Address>
+           <tt:Type>IPv4</tt:Type>
+           <tt:IPv4Address>224.1.2.3</tt:IPv4Address>
+          </tt:Address>
+          <tt:Port>10000</tt:Port>
+          <tt:TTL>1</tt:TTL>
+          <tt:AutoStart>false</tt:AutoStart>
+         </tt:Multicast>
+         <tt:SessionTimeout>PT0S</tt:SessionTimeout>
+        </tt:MetadataConfiguration>
+       </trt:Profiles>
+      </trt:GetProfilesResponse>
+     </env:Body>
+    </env:Envelope>
+
+  Now the 4 axis movment in each direction:
+  
+  **Down**
+  
+  *C->S*
+
+    <s:Envelope
+     xmlns:s="http://www.w3.org/2003/05/soap-envelope">
+     <s:Body
+      xmlns:tptz="http://www.onvif.org/ver20/ptz/wsdl"
+      xmlns:tt="http://www.onvif.org/ver10/schema">
+      <tptz:ContinuousMove>
+       <tptz:ProfileToken>Profile_1</tptz:ProfileToken>
+       <tptz:Velocity>
+        <tt:PanTilt x="0.000000" y="-0.200000"/>
+        <tt:Zoom x="0.000000"/>
+       </tptz:Velocity>
+      </tptz:ContinuousMove>
+     </s:Body>
+    </s:Envelope>
+
+
+  *S->C*
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <env:Envelope
+     xmlns:env="http://www.w3.org/2003/05/soap-envelope"
+     xmlns:soapenc="http://www.w3.org/2003/05/soap-encoding"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:xs="http://www.w3.org/2001/XMLSchema"
+     xmlns:tt="http://www.onvif.org/ver10/schema"
+     xmlns:tds="http://www.onvif.org/ver10/device/wsdl"
+     xmlns:trt="http://www.onvif.org/ver10/media/wsdl"
+     xmlns:timg="http://www.onvif.org/ver20/imaging/wsdl"
+     xmlns:tev="http://www.onvif.org/ver10/events/wsdl"
+     xmlns:tptz="http://www.onvif.org/ver20/ptz/wsdl"
+     xmlns:tan="http://www.onvif.org/ver20/analytics/wsdl"
+     xmlns:tst="http://www.onvif.org/ver10/storage/wsdl"
+     xmlns:ter="http://www.onvif.org/ver10/error"
+     xmlns:dn="http://www.onvif.org/ver10/network/wsdl"
+     xmlns:tns1="http://www.onvif.org/ver10/topics"
+     xmlns:tmd="http://www.onvif.org/ver10/deviceIO/wsdl"
+     xmlns:gte="http://www.onvif.org/ver10/gtextension/wsdl"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl"
+     xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12"
+     xmlns:http="http://schemas.xmlsoap.org/wsdl/http"
+     xmlns:d="http://schemas.xmlsoap.org/ws/2005/04/discovery"
+     xmlns:wsadis="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+     xmlns:xop="http://www.w3.org/2004/08/xop/include"
+     xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2"
+     xmlns:wsa="http://www.w3.org/2005/08/addressing"
+     xmlns:wstop="http://docs.oasis-open.org/wsn/t-1"
+     xmlns:wsrf-bf="http://docs.oasis-open.org/wsrf/bf-2"
+     xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2"
+     xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2"
+     xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+     xmlns:wsrf-r="http://docs.oasis-open.org/wsrf/r-2"
+     xmlns:tnsn="http://www.eventextension.com/2011/event/topics">
+     <env:Body>
+      <tptz:ContinuousMoveResponse/>
+     </env:Body>
+    </env:Envelope>
+
+
+  *C->S*
+
+    <s:Envelope
+     xmlns:s="http://www.w3.org/2003/05/soap-envelope">
+     <s:Body
+      xmlns:tptz="http://www.onvif.org/ver20/ptz/wsdl">
+      <tptz:Stop>
+       <tptz:ProfileToken>Profile_1</tptz:ProfileToken>
+       <tptz:PanTilt>true</tptz:PanTilt>
+       <tptz:Zoom>false</tptz:Zoom>
+      </tptz:Stop>
+     </s:Body>
+    </s:Envelope>
+
+
+  *S->C*
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <env:Envelope
+     xmlns:env="http://www.w3.org/2003/05/soap-envelope"
+     xmlns:soapenc="http://www.w3.org/2003/05/soap-encoding"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:xs="http://www.w3.org/2001/XMLSchema"
+     xmlns:tt="http://www.onvif.org/ver10/schema"
+     xmlns:tds="http://www.onvif.org/ver10/device/wsdl"
+     xmlns:trt="http://www.onvif.org/ver10/media/wsdl"
+     xmlns:timg="http://www.onvif.org/ver20/imaging/wsdl"
+     xmlns:tev="http://www.onvif.org/ver10/events/wsdl"
+     xmlns:tptz="http://www.onvif.org/ver20/ptz/wsdl"
+     xmlns:tan="http://www.onvif.org/ver20/analytics/wsdl"
+     xmlns:tst="http://www.onvif.org/ver10/storage/wsdl"
+     xmlns:ter="http://www.onvif.org/ver10/error"
+     xmlns:dn="http://www.onvif.org/ver10/network/wsdl"
+     xmlns:tns1="http://www.onvif.org/ver10/topics"
+     xmlns:tmd="http://www.onvif.org/ver10/deviceIO/wsdl"
+     xmlns:gte="http://www.onvif.org/ver10/gtextension/wsdl"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl"
+     xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12"
+     xmlns:http="http://schemas.xmlsoap.org/wsdl/http"
+     xmlns:d="http://schemas.xmlsoap.org/ws/2005/04/discovery"
+     xmlns:wsadis="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+     xmlns:xop="http://www.w3.org/2004/08/xop/include"
+     xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2"
+     xmlns:wsa="http://www.w3.org/2005/08/addressing"
+     xmlns:wstop="http://docs.oasis-open.org/wsn/t-1"
+     xmlns:wsrf-bf="http://docs.oasis-open.org/wsrf/bf-2"
+     xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2"
+     xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2"
+     xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+     xmlns:wsrf-r="http://docs.oasis-open.org/wsrf/r-2"
+     xmlns:tnsn="http://www.eventextension.com/2011/event/topics">
+     <env:Body>
+      <tptz:StopResponse/>
+     </env:Body>
+    </env:Envelope>
+
+  **Left**
+
+  *C->S*
+
+    <s:Envelope
+     xmlns:s="http://www.w3.org/2003/05/soap-envelope">
+     <s:Body
+      xmlns:tptz="http://www.onvif.org/ver20/ptz/wsdl"
+      xmlns:tt="http://www.onvif.org/ver10/schema">
+      <tptz:ContinuousMove>
+       <tptz:ProfileToken>Profile_1</tptz:ProfileToken>
+       <tptz:Velocity>
+        <tt:PanTilt x="-0.200000" y="0.000000"/>
+        <tt:Zoom x="0.000000"/>
+       </tptz:Velocity>
+      </tptz:ContinuousMove>
+     </s:Body>
+    </s:Envelope>
+
+
+  *S->C*
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <env:Envelope
+     xmlns:env="http://www.w3.org/2003/05/soap-envelope"
+     xmlns:soapenc="http://www.w3.org/2003/05/soap-encoding"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:xs="http://www.w3.org/2001/XMLSchema"
+     xmlns:tt="http://www.onvif.org/ver10/schema"
+     xmlns:tds="http://www.onvif.org/ver10/device/wsdl"
+     xmlns:trt="http://www.onvif.org/ver10/media/wsdl"
+     xmlns:timg="http://www.onvif.org/ver20/imaging/wsdl"
+     xmlns:tev="http://www.onvif.org/ver10/events/wsdl"
+     xmlns:tptz="http://www.onvif.org/ver20/ptz/wsdl"
+     xmlns:tan="http://www.onvif.org/ver20/analytics/wsdl"
+     xmlns:tst="http://www.onvif.org/ver10/storage/wsdl"
+     xmlns:ter="http://www.onvif.org/ver10/error"
+     xmlns:dn="http://www.onvif.org/ver10/network/wsdl"
+     xmlns:tns1="http://www.onvif.org/ver10/topics"
+     xmlns:tmd="http://www.onvif.org/ver10/deviceIO/wsdl"
+     xmlns:gte="http://www.onvif.org/ver10/gtextension/wsdl"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl"
+     xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12"
+     xmlns:http="http://schemas.xmlsoap.org/wsdl/http"
+     xmlns:d="http://schemas.xmlsoap.org/ws/2005/04/discovery"
+     xmlns:wsadis="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+     xmlns:xop="http://www.w3.org/2004/08/xop/include"
+     xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2"
+     xmlns:wsa="http://www.w3.org/2005/08/addressing"
+     xmlns:wstop="http://docs.oasis-open.org/wsn/t-1"
+     xmlns:wsrf-bf="http://docs.oasis-open.org/wsrf/bf-2"
+     xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2"
+     xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2"
+     xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+     xmlns:wsrf-r="http://docs.oasis-open.org/wsrf/r-2"
+     xmlns:tnsn="http://www.eventextension.com/2011/event/topics">
+     <env:Body>
+      <tptz:ContinuousMoveResponse/>
+     </env:Body>
+    </env:Envelope>
+
+
+  *C->S*
+
+   <s:Envelope
+    xmlns:s="http://www.w3.org/2003/05/soap-envelope">
+    <s:Body
+     xmlns:tptz="http://www.onvif.org/ver20/ptz/wsdl">
+     <tptz:Stop>
+      <tptz:ProfileToken>Profile_1</tptz:ProfileToken>
+      <tptz:PanTilt>true</tptz:PanTilt>
+      <tptz:Zoom>false</tptz:Zoom>
+     </tptz:Stop>
+    </s:Body>
+   </s:Envelope>
+
+
+  *S->C*
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <env:Envelope
+     xmlns:env="http://www.w3.org/2003/05/soap-envelope"
+     xmlns:soapenc="http://www.w3.org/2003/05/soap-encoding"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:xs="http://www.w3.org/2001/XMLSchema"
+     xmlns:tt="http://www.onvif.org/ver10/schema"
+     xmlns:tds="http://www.onvif.org/ver10/device/wsdl"
+     xmlns:trt="http://www.onvif.org/ver10/media/wsdl"
+     xmlns:timg="http://www.onvif.org/ver20/imaging/wsdl"
+     xmlns:tev="http://www.onvif.org/ver10/events/wsdl"
+     xmlns:tptz="http://www.onvif.org/ver20/ptz/wsdl"
+     xmlns:tan="http://www.onvif.org/ver20/analytics/wsdl"
+     xmlns:tst="http://www.onvif.org/ver10/storage/wsdl"
+     xmlns:ter="http://www.onvif.org/ver10/error"
+     xmlns:dn="http://www.onvif.org/ver10/network/wsdl"
+     xmlns:tns1="http://www.onvif.org/ver10/topics"
+     xmlns:tmd="http://www.onvif.org/ver10/deviceIO/wsdl"
+     xmlns:gte="http://www.onvif.org/ver10/gtextension/wsdl"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl"
+     xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12"
+     xmlns:http="http://schemas.xmlsoap.org/wsdl/http"
+     xmlns:d="http://schemas.xmlsoap.org/ws/2005/04/discovery"
+     xmlns:wsadis="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+     xmlns:xop="http://www.w3.org/2004/08/xop/include"
+     xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2"
+     xmlns:wsa="http://www.w3.org/2005/08/addressing"
+     xmlns:wstop="http://docs.oasis-open.org/wsn/t-1"
+     xmlns:wsrf-bf="http://docs.oasis-open.org/wsrf/bf-2"
+     xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2"
+     xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2"
+     xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+     xmlns:wsrf-r="http://docs.oasis-open.org/wsrf/r-2"
+     xmlns:tnsn="http://www.eventextension.com/2011/event/topics">
+     <env:Body>
+      <tptz:StopResponse/>
+     </env:Body>
+    </env:Envelope>
+
+  **Down**
+  
+  *C->S*
+
+    <s:Envelope
+     xmlns:s="http://www.w3.org/2003/05/soap-envelope">
+     <s:Body
+      xmlns:tptz="http://www.onvif.org/ver20/ptz/wsdl"
+      xmlns:tt="http://www.onvif.org/ver10/schema">
+      <tptz:ContinuousMove>
+       <tptz:ProfileToken>Profile_1</tptz:ProfileToken>
+       <tptz:Velocity>
+        <tt:PanTilt x="0.000000" y="0.200000"/>
+        <tt:Zoom x="0.000000"/>
+       </tptz:Velocity>
+      </tptz:ContinuousMove>
+     </s:Body>
+    </s:Envelope>
+
+
+  *S->C*
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <env:Envelope
+     xmlns:env="http://www.w3.org/2003/05/soap-envelope"
+     xmlns:soapenc="http://www.w3.org/2003/05/soap-encoding"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:xs="http://www.w3.org/2001/XMLSchema"
+     xmlns:tt="http://www.onvif.org/ver10/schema"
+     xmlns:tds="http://www.onvif.org/ver10/device/wsdl"
+     xmlns:trt="http://www.onvif.org/ver10/media/wsdl"
+     xmlns:timg="http://www.onvif.org/ver20/imaging/wsdl"
+     xmlns:tev="http://www.onvif.org/ver10/events/wsdl"
+     xmlns:tptz="http://www.onvif.org/ver20/ptz/wsdl"
+     xmlns:tan="http://www.onvif.org/ver20/analytics/wsdl"
+     xmlns:tst="http://www.onvif.org/ver10/storage/wsdl"
+     xmlns:ter="http://www.onvif.org/ver10/error"
+     xmlns:dn="http://www.onvif.org/ver10/network/wsdl"
+     xmlns:tns1="http://www.onvif.org/ver10/topics"
+     xmlns:tmd="http://www.onvif.org/ver10/deviceIO/wsdl"
+     xmlns:gte="http://www.onvif.org/ver10/gtextension/wsdl"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl"
+     xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12"
+     xmlns:http="http://schemas.xmlsoap.org/wsdl/http"
+     xmlns:d="http://schemas.xmlsoap.org/ws/2005/04/discovery"
+     xmlns:wsadis="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+     xmlns:xop="http://www.w3.org/2004/08/xop/include"
+     xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2"
+     xmlns:wsa="http://www.w3.org/2005/08/addressing"
+     xmlns:wstop="http://docs.oasis-open.org/wsn/t-1"
+     xmlns:wsrf-bf="http://docs.oasis-open.org/wsrf/bf-2"
+     xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2"
+     xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2"
+     xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+     xmlns:wsrf-r="http://docs.oasis-open.org/wsrf/r-2"
+     xmlns:tnsn="http://www.eventextension.com/2011/event/topics">
+     <env:Body>
+      <tptz:ContinuousMoveResponse/>
+     </env:Body>
+    </env:Envelope>
+
+
+  *C->S*
+
+    <s:Envelope
+     xmlns:s="http://www.w3.org/2003/05/soap-envelope">
+     <s:Body
+      xmlns:tptz="http://www.onvif.org/ver20/ptz/wsdl">
+      <tptz:Stop>
+       <tptz:ProfileToken>Profile_1</tptz:ProfileToken>
+       <tptz:PanTilt>true</tptz:PanTilt>
+       <tptz:Zoom>false</tptz:Zoom>
+      </tptz:Stop>
+     </s:Body>
+    </s:Envelope>
+
+
+  *S->C*
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <env:Envelope
+     xmlns:env="http://www.w3.org/2003/05/soap-envelope"
+     xmlns:soapenc="http://www.w3.org/2003/05/soap-encoding"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:xs="http://www.w3.org/2001/XMLSchema"
+     xmlns:tt="http://www.onvif.org/ver10/schema"
+     xmlns:tds="http://www.onvif.org/ver10/device/wsdl"
+     xmlns:trt="http://www.onvif.org/ver10/media/wsdl"
+     xmlns:timg="http://www.onvif.org/ver20/imaging/wsdl"
+     xmlns:tev="http://www.onvif.org/ver10/events/wsdl"
+     xmlns:tptz="http://www.onvif.org/ver20/ptz/wsdl"
+     xmlns:tan="http://www.onvif.org/ver20/analytics/wsdl"
+     xmlns:tst="http://www.onvif.org/ver10/storage/wsdl"
+     xmlns:ter="http://www.onvif.org/ver10/error"
+     xmlns:dn="http://www.onvif.org/ver10/network/wsdl"
+     xmlns:tns1="http://www.onvif.org/ver10/topics"
+     xmlns:tmd="http://www.onvif.org/ver10/deviceIO/wsdl"
+     xmlns:gte="http://www.onvif.org/ver10/gtextension/wsdl"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl"
+     xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12"
+     xmlns:http="http://schemas.xmlsoap.org/wsdl/http"
+     xmlns:d="http://schemas.xmlsoap.org/ws/2005/04/discovery"
+     xmlns:wsadis="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+     xmlns:xop="http://www.w3.org/2004/08/xop/include"
+     xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2"
+     xmlns:wsa="http://www.w3.org/2005/08/addressing"
+     xmlns:wstop="http://docs.oasis-open.org/wsn/t-1"
+     xmlns:wsrf-bf="http://docs.oasis-open.org/wsrf/bf-2"
+     xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2"
+     xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2"
+     xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+     xmlns:wsrf-r="http://docs.oasis-open.org/wsrf/r-2"
+     xmlns:tnsn="http://www.eventextension.com/2011/event/topics">
+     <env:Body>
+      <tptz:StopResponse/>
+     </env:Body>
+    </env:Envelope>
+
+  **Right**
+  
+  *C->S*
+
+    <s:Envelope
+     xmlns:s="http://www.w3.org/2003/05/soap-envelope">
+     <s:Body
+      xmlns:tptz="http://www.onvif.org/ver20/ptz/wsdl"
+      xmlns:tt="http://www.onvif.org/ver10/schema">
+      <tptz:ContinuousMove>
+       <tptz:ProfileToken>Profile_1</tptz:ProfileToken>
+       <tptz:Velocity>
+        <tt:PanTilt x="0.200000" y="0.000000"/>
+        <tt:Zoom x="0.000000"/>
+       </tptz:Velocity>
+      </tptz:ContinuousMove>
+     </s:Body>
+    </s:Envelope>
+
+
+  *S->C*
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <env:Envelope
+     xmlns:env="http://www.w3.org/2003/05/soap-envelope"
+     xmlns:soapenc="http://www.w3.org/2003/05/soap-encoding"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:xs="http://www.w3.org/2001/XMLSchema"
+     xmlns:tt="http://www.onvif.org/ver10/schema"
+     xmlns:tds="http://www.onvif.org/ver10/device/wsdl"
+     xmlns:trt="http://www.onvif.org/ver10/media/wsdl"
+     xmlns:timg="http://www.onvif.org/ver20/imaging/wsdl"
+     xmlns:tev="http://www.onvif.org/ver10/events/wsdl"
+     xmlns:tptz="http://www.onvif.org/ver20/ptz/wsdl"
+     xmlns:tan="http://www.onvif.org/ver20/analytics/wsdl"
+     xmlns:tst="http://www.onvif.org/ver10/storage/wsdl"
+     xmlns:ter="http://www.onvif.org/ver10/error"
+     xmlns:dn="http://www.onvif.org/ver10/network/wsdl"
+     xmlns:tns1="http://www.onvif.org/ver10/topics"
+     xmlns:tmd="http://www.onvif.org/ver10/deviceIO/wsdl"
+     xmlns:gte="http://www.onvif.org/ver10/gtextension/wsdl"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl"
+     xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12"
+     xmlns:http="http://schemas.xmlsoap.org/wsdl/http"
+     xmlns:d="http://schemas.xmlsoap.org/ws/2005/04/discovery"
+     xmlns:wsadis="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+     xmlns:xop="http://www.w3.org/2004/08/xop/include"
+     xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2"
+     xmlns:wsa="http://www.w3.org/2005/08/addressing"
+     xmlns:wstop="http://docs.oasis-open.org/wsn/t-1"
+     xmlns:wsrf-bf="http://docs.oasis-open.org/wsrf/bf-2"
+     xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2"
+     xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2"
+     xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+     xmlns:wsrf-r="http://docs.oasis-open.org/wsrf/r-2"
+     xmlns:tnsn="http://www.eventextension.com/2011/event/topics">
+     <env:Body>
+      <tptz:ContinuousMoveResponse/>
+     </env:Body>
+    </env:Envelope>
+
+
+  *C->S*
+
+    <s:Envelope
+     xmlns:s="http://www.w3.org/2003/05/soap-envelope">
+     <s:Body
+      xmlns:tptz="http://www.onvif.org/ver20/ptz/wsdl">
+      <tptz:Stop>
+       <tptz:ProfileToken>Profile_1</tptz:ProfileToken>
+       <tptz:PanTilt>true</tptz:PanTilt>
+       <tptz:Zoom>false</tptz:Zoom>
+      </tptz:Stop>
+     </s:Body>
+    </s:Envelope>
+
+
+  *S->C*
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <env:Envelope
+     xmlns:env="http://www.w3.org/2003/05/soap-envelope"
+     xmlns:soapenc="http://www.w3.org/2003/05/soap-encoding"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:xs="http://www.w3.org/2001/XMLSchema"
+     xmlns:tt="http://www.onvif.org/ver10/schema"
+     xmlns:tds="http://www.onvif.org/ver10/device/wsdl"
+     xmlns:trt="http://www.onvif.org/ver10/media/wsdl"
+     xmlns:timg="http://www.onvif.org/ver20/imaging/wsdl"
+     xmlns:tev="http://www.onvif.org/ver10/events/wsdl"
+     xmlns:tptz="http://www.onvif.org/ver20/ptz/wsdl"
+     xmlns:tan="http://www.onvif.org/ver20/analytics/wsdl"
+     xmlns:tst="http://www.onvif.org/ver10/storage/wsdl"
+     xmlns:ter="http://www.onvif.org/ver10/error"
+     xmlns:dn="http://www.onvif.org/ver10/network/wsdl"
+     xmlns:tns1="http://www.onvif.org/ver10/topics"
+     xmlns:tmd="http://www.onvif.org/ver10/deviceIO/wsdl"
+     xmlns:gte="http://www.onvif.org/ver10/gtextension/wsdl"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl"
+     xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12"
+     xmlns:http="http://schemas.xmlsoap.org/wsdl/http"
+     xmlns:d="http://schemas.xmlsoap.org/ws/2005/04/discovery"
+     xmlns:wsadis="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+     xmlns:xop="http://www.w3.org/2004/08/xop/include"
+     xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2"
+     xmlns:wsa="http://www.w3.org/2005/08/addressing"
+     xmlns:wstop="http://docs.oasis-open.org/wsn/t-1"
+     xmlns:wsrf-bf="http://docs.oasis-open.org/wsrf/bf-2"
+     xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2"
+     xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2"
+     xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+     xmlns:wsrf-r="http://docs.oasis-open.org/wsrf/r-2"
+     xmlns:tnsn="http://www.eventextension.com/2011/event/topics">
+     <env:Body>
+      <tptz:StopResponse/>
+     </env:Body>
+    </env:Envelope>
+
+
 ## Single Len - 1080P - H264
 
 ![Single len](https://github.com/avafinger/onvif_ip_camera_dome/raw/main/cam2_single_len_1080P_PTZ.jpg)
