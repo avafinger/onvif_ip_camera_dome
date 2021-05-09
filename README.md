@@ -80,9 +80,9 @@ This is my experiments/annotations/effort to control some onvif PTZ IP camera do
 
   **PTZ Control**
   
-  This is the 4 axis movment, camera respond on Port 80 with soap+xml.
+  This is the 4 axis movement, the camera responds at Port 80 with soap+xml.
   
-  Grab Movment info:
+  Grab Movement info:
   
   *C->S*
 
@@ -339,7 +339,7 @@ This is my experiments/annotations/effort to control some onvif PTZ IP camera do
      </env:Body>
     </env:Envelope>
 
-  Now the 4 axis movment in each direction:
+  Now the 4 axis movement in each direction:
   
   **Down**
   
@@ -523,17 +523,17 @@ This is my experiments/annotations/effort to control some onvif PTZ IP camera do
 
   *C->S*
 
-   <s:Envelope
-    xmlns:s="http://www.w3.org/2003/05/soap-envelope">
-    <s:Body
-     xmlns:tptz="http://www.onvif.org/ver20/ptz/wsdl">
-     <tptz:Stop>
-      <tptz:ProfileToken>Profile_1</tptz:ProfileToken>
-      <tptz:PanTilt>true</tptz:PanTilt>
-      <tptz:Zoom>false</tptz:Zoom>
-     </tptz:Stop>
-    </s:Body>
-   </s:Envelope>
+    <s:Envelope
+     xmlns:s="http://www.w3.org/2003/05/soap-envelope">
+     <s:Body
+      xmlns:tptz="http://www.onvif.org/ver20/ptz/wsdl">
+      <tptz:Stop>
+       <tptz:ProfileToken>Profile_1</tptz:ProfileToken>
+       <tptz:PanTilt>true</tptz:PanTilt>
+       <tptz:Zoom>false</tptz:Zoom>
+      </tptz:Stop>
+     </s:Body>
+    </s:Envelope>
 
 
   *S->C*
